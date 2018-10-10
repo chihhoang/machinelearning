@@ -6,6 +6,7 @@ function [J, grad] = costFunctionReg(theta, X, y, lambda)
 
 % Initialize some useful values
 m = length(y); % number of training examples
+n = length(theta); % number of features
 
 % You need to return the following variables correctly 
 J = 0;
@@ -17,25 +18,15 @@ grad = zeros(size(theta));
 %               Compute the partial derivatives and set grad to the partial
 %               derivatives of the cost w.r.t. each parameter in theta
 h = sigmoid(X * theta);
-% J = costFunction(theta, X, y)(1) + lambda/;
-disp(size(X));
-disp(size(theta));
-% TODO: Analyze dimension and finish gradient
-J = 1 / m * (-y'*log(h) - (1 - y')*log(1 - h)) + lambda/2/m*theta.^2;
-disp(size(h));
-disp(size(J));
+
+J = 1 / m * (-y'*log(h) - (1 - y')*log(1 - h)) + lambda/2/m*sum(theta(2:n).^2);
+
 first_x = X(:,1);
-disp(size(first_x'));
 
-h0 = sigmoid(X(:,1) * theta(1,:));
-
-grad(1) = grad(1) + 1/m*(first_x'*(h0 - y));
-
-grad(2:28) = grad(2:28) + 1/m*X(:,2:28)'*(sigmoid(X(:,2:28) * theta(2:28,:)) - y) + lambda/m*theta(2:28);
-
-
-
-
+% Compute the first theta without regularization
+grad(1) = grad(1) + 1/m*(first_x'*(h - y));
+% Start regularizing from the second theta
+grad(2:n) = grad(2:n) + 1/m*X(:,2:n)'*(h - y) + lambda/m*theta(2:n);
 
 % =============================================================
 
