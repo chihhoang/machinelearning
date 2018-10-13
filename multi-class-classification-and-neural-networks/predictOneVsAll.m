@@ -30,11 +30,10 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
-
-
-
-
-
+% max function returns 2 values
+% The first one is max values of each row, which we don't need
+% The second one is that first index of the max value, which we want
+[max_values, p] = max(sigmoid(X * all_theta'), [], 2);
 
 % =========================================================================
 
