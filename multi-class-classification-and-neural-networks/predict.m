@@ -24,22 +24,22 @@ p = zeros(size(X, 1), 1);
 % Theta1 has size 25 x 401
 % Theta2 has size 10 x 26
 
-% X has size 400 x 1, need to add 1s column for a1
+% X has size 5000 x 400, need to add a 1s column for a1
 a1 = [ones(m, 1) X];
 
-% Compute values in hidden layer
+% Compute values in the hidden layer
 a2 = sigmoid(a1 * Theta1');
 
-% Add 1s column to a2
+% Add a 1s column to a2
 a2 = [ones(size(a2), 1) a2];
 
-% Compute values in output layer
+% Compute values in the output layer
 a3 = sigmoid(a2 * Theta2');
 
 % max function returns 2 values
 % The first one is max values of each row, which we don't need
 % The second one is that first index of the max value, which we want
-% Save our ouputs in p
+% Save our outputs in p
 [max_values, p] = max(a3, [], 2);
 
 % =========================================================================
