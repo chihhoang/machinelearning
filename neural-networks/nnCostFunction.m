@@ -23,7 +23,8 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
                  num_labels, (hidden_layer_size + 1));
 
 % Setup some useful variables
-m = size(X, 1);
+m = size(X, 1); % input size
+K = size(num_labels); % number of output units
          
 % You need to return the following variables correctly 
 J = 0;
@@ -62,17 +63,41 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+%--------
+% Part 1 |
+%--------
 
+% Dimensional analysis with the provided test case
 
+% input_layer_size  = 400;  % 20x20 Input Images of Digits
+% hidden_layer_size = 25;   % 25 hidden units
+% num_labels = 10;
+% m = 5000
+% K = 10
+% X size - 5000 x 400
+% y size - 5000 x 1
+% Theta1 size - 25 x 401
+% Theta2 size - 10 x 26
 
+% y labels are stored in value (1,2,..,10)
+% Expand the labels into vectors e.g. [1 0 0 .. 0] (represents number 1)
+y_matrix = eye(num_labels)(y,:); % 5000 x 10
 
+% Forward propagation
+a1 = [ones(m, 1) X]; % 5000 x 401
+z2 = a1 * Theta1'; % 5000 x 25
+a2 = sigmoid(z2); % 5000 x 25
 
+a2 = [ones(m, 1) a2]; % 5000 x 26
+z3 = a2 * Theta2'; % 5000 x 10
+a3 = sigmoid(z3); % 5000 x 10
 
+% Calculate the cost with double-sum of the element-wise product
+% J = 1 / m * sum(sum(-y_matrix.*log(a3) - (1 - y_matrix).*log(1 - a3)));
 
-
-
-
-
+% Or we can use the trace function to compute the sum of elements along 
+% the main diagonal of the product matrix
+J = 1 / m * trace(-y_matrix'*log(a3) - (1 - y_matrix')*log(1 - a3));
 
 
 
