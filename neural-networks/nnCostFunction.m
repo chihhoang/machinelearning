@@ -99,7 +99,9 @@ a3 = sigmoid(z3); % 5000 x 10
 % the main diagonal of the product matrix
 J = 1 / m * trace(-y_matrix'*log(a3) - (1 - y_matrix')*log(1 - a3));
 
-
+% Regularize the cost, ignore the terms that corresponds
+% to the bias (first column)
+J = J + lambda/2/m * (sum(sum(Theta1(:, 2:end).^2)) + sum(sum(Theta2(:, 2:end).^2)));
 
 
 
