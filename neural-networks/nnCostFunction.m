@@ -103,9 +103,19 @@ J = 1 / m * trace(-y_matrix'*log(a3) - (1 - y_matrix')*log(1 - a3));
 % to the bias (first column)
 J = J + lambda/2/m * (sum(sum(Theta1(:, 2:end).^2)) + sum(sum(Theta2(:, 2:end).^2)));
 
+%--------
+% Part 2 |
+%--------
 
+% Backpropagation
+delta3 = a3 - y_matrix; % 5000 x 10
+delta2 = delta3 * Theta2(:, 2:end) .* sigmoidGradient(z2); % 5000 x 25
 
+Delta1 = delta2' * a1; % 25 x 401
+Delta2 = delta3' * a2; % 10 x 26
 
+Theta1_grad = Delta1 / m;
+Theta2_grad = Delta2 / m;
 
 % -------------------------------------------------------------
 
