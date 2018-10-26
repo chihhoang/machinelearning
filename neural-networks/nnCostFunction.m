@@ -114,8 +114,17 @@ delta2 = delta3 * Theta2(:, 2:end) .* sigmoidGradient(z2); % 5000 x 25
 Delta1 = delta2' * a1; % 25 x 401
 Delta2 = delta3' * a2; % 10 x 26
 
-Theta1_grad = Delta1 / m;
-Theta2_grad = Delta2 / m;
+% Zeros Thetas' first column to avoid regularizing the bias terms
+Theta1(:, 1) = 0; 
+Theta2(:, 1) = 0; 
+
+%--------
+% Part 3 |
+%--------
+
+% Regularize the gradients
+Theta1_grad = Delta1 / m + lambda/m*Theta1;
+Theta2_grad = Delta2 / m + lambda/m*Theta2;
 
 % -------------------------------------------------------------
 
