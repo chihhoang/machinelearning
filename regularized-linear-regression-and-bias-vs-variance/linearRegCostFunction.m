@@ -19,8 +19,21 @@ grad = zeros(size(theta));
 %               You should set J to the cost and grad to the gradient.
 %
 
+% Compute our hypothesis with given data and parameters
+h = (X * theta);
+
 % Compute the linear regression cost with regularization
-J = 1/2/m * sum(((X * theta) - y) .^ 2) + lambda/2/m*sum(theta(2:end).^2);
+J = 1/2/m * sum((h - y) .^ 2) + lambda/2/m*sum(theta(2:end).^2);
+
+% Compute gradients without regularization
+grad = 1 / m * X' * (h - y);
+
+% Set the first column of theta to 0 to avoid regularizing the first param term
+temp = theta;
+temp(1) = 0;
+
+% Regularize gradients
+grad = grad + lambda/m*temp;
 
 % =========================================================================
 
