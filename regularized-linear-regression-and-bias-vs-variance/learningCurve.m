@@ -53,11 +53,16 @@ error_val   = zeros(m, 1);
 
 % ---------------------- Sample Solution ----------------------
 
+% Compute training error and validation error on the first i examples
+% and store in error_train and error_val accordingly
+for i = 1:m
+    subset_X = X(1:i, :);
+    subset_y = y(1:i);
+    theta = trainLinearReg([ones(i, 1) subset_X], subset_y, lambda);
 
-
-
-
-
+    error_train(i) = linearRegCostFunction([ones(i, 1) subset_X], subset_y, theta, 0);
+    error_val(i) = linearRegCostFunction([ones(size(Xval, 1), 1) Xval], yval, theta, 0);
+end
 
 % -------------------------------------------------------------
 
