@@ -20,11 +20,10 @@ S = zeros(n);
 %       number of examples).
 %
 
-
-
-
-
-
+% Compute the covariance matrix of the data
+Sigma = 1/m * X' * X;
+% Compute the principle components 
+[U, S, X] = svd(Sigma);
 
 % =========================================================================
 
