@@ -21,11 +21,21 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+m = size(X,1);
 
-
-
-
-
+for i = 1:m
+    % current example x^i shortest distance to a centroid
+    min_distance = 999999;
+    for j = 1:K
+        % distance from x^i to current centroid sigma_j
+        distance = sum((X(i, :) - centroids(j, :)).^2);
+        if distance < min_distance
+            % assign example to index/cluster
+            idx(i) = j;
+            min_distance = distance;
+        endif
+    end
+end
 
 % =============================================================
 
