@@ -21,14 +21,9 @@ sigma2 = zeros(n, 1);
 %               should contain variance of the i-th feature.
 %
 
-
-
-
-
-
-
-
-
+% Compute along column then transpose to n-dimensional vector
+mu = mean(X)';
+sigma2 = var(X, 1)'; % OPT=1 to normalize with m instead of m - 1
 
 % =============================================================
 
