@@ -40,11 +40,15 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
-J = 1/2 * sum(sum(((X*Theta' - Y).*R).^2)) + lambda/2 * sum(sum(Theta.^2))  + lambda/2 * sum(sum(X.^2));
+% Compute the error and use R to index/factor in 
+% only the entries of users that had given ratings
+error = R.*(X*Theta' - Y);
 
-X_grad = (X*Theta' - Y).*R * Theta + lambda*X;
+J = 1/2 * sum(sum(error.^2)) + lambda/2 * sum(sum(Theta.^2))  + lambda/2 * sum(sum(X.^2));
 
-Theta_grad = ((X*Theta' - Y).*R)' * X + lambda*Theta;
+X_grad = error * Theta + lambda*X;
+
+Theta_grad = error' * X + lambda*Theta;
 
 % =============================================================
 
